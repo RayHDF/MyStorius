@@ -1,6 +1,7 @@
 package com.dicoding.picodiploma.mystorius.data
 
 import com.dicoding.picodiploma.mystorius.data.api.ApiService
+import com.dicoding.picodiploma.mystorius.data.api.LoginResponse
 import com.dicoding.picodiploma.mystorius.data.api.RegisterResponse
 import com.dicoding.picodiploma.mystorius.data.pref.UserModel
 import com.dicoding.picodiploma.mystorius.data.pref.UserPreference
@@ -25,6 +26,10 @@ class UserRepository private constructor(
 
     suspend fun register(name: String, email: String, password: String): RegisterResponse {
         return apiService.register(name, email, password)
+    }
+
+    suspend fun login(email: String, password: String): LoginResponse {
+        return apiService.login(email, password)
     }
 
     companion object {

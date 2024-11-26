@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.mystorius.view.signup
 
 import android.os.Build
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
@@ -11,7 +12,6 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.dicoding.picodiploma.mystorius.databinding.ActivitySignupBinding
 import com.dicoding.picodiploma.mystorius.view.ViewModelFactory
 
@@ -32,6 +32,19 @@ class SignupActivity : AppCompatActivity() {
         setupAction()
         setupTextWatchers()
         observeViewModel()
+
+        if (savedInstanceState != null) {
+            binding.nameEditText.setText(savedInstanceState.getString("name"))
+            binding.emailEditText.setText(savedInstanceState.getString("email"))
+            binding.passwordEditText.setText(savedInstanceState.getString("password"))
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("name", binding.nameEditText.text.toString())
+        outState.putString("email", binding.emailEditText.text.toString())
+        outState.putString("password", binding.passwordEditText.text.toString())
     }
 
     private fun setupView() {
@@ -80,33 +93,29 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.registrationState.observe(this) { state ->
-            when (state) {
-                is RegistrationState.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
+        viewModel.isLoading.observe(this) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        viewModel.successResponse.observe(this) { response ->
+            AlertDialog.Builder(this).apply {
+                setTitle("Yeah!")
+                setMessage("Akun dengan ${response.message} sudah jadi nih. Yuk, login dan belajar coding.")
+                setPositiveButton("Lanjut") { _, _ ->
+                    finish()
                 }
-                is RegistrationState.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    AlertDialog.Builder(this).apply {
-                        setTitle("Yeah!")
-                        setMessage("Akun dengan ${state.response.message} sudah jadi nih. Yuk, login dan belajar coding.")
-                        setPositiveButton("Lanjut") { _, _ ->
-                            finish()
-                        }
-                        create()
-                        show()
-                    }
-                }
-                is RegistrationState.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    AlertDialog.Builder(this).apply {
-                        setTitle("Error")
-                        setMessage(state.error)
-                        setPositiveButton("OK", null)
-                        create()
-                        show()
-                    }
-                }
+                create()
+                show()
+            }
+        }
+
+        viewModel.error.observe(this) { error ->
+            AlertDialog.Builder(this).apply {
+                setTitle("Error")
+                setMessage(error)
+                setPositiveButton("OK", null)
+                create()
+                show()
             }
         }
     }

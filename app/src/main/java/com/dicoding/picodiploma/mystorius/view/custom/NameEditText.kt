@@ -45,7 +45,7 @@ class NameEditText @JvmOverloads constructor(
         return false
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         hint = "Name"
         textAlignment = TEXT_ALIGNMENT_VIEW_START

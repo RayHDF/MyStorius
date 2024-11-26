@@ -8,25 +8,27 @@ import com.dicoding.picodiploma.mystorius.data.UserRepository
 import com.dicoding.picodiploma.mystorius.data.api.RegisterResponse
 import kotlinx.coroutines.launch
 
-sealed class RegistrationState {
-    object Loading : RegistrationState()
-    data class Success(val response: RegisterResponse) : RegistrationState()
-    data class Error(val error: String) : RegistrationState()
-}
-
 class SignupViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    private val _registrationState = MutableLiveData<RegistrationState>()
-    val registrationState: LiveData<RegistrationState> = _registrationState
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _successResponse = MutableLiveData<RegisterResponse>()
+    val successResponse: LiveData<RegisterResponse> = _successResponse
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
 
     fun register(name: String, email: String, password: String) {
-        _registrationState.value = RegistrationState.Loading
+        _isLoading.value = true
         viewModelScope.launch {
             try {
                 val response = userRepository.register(name, email, password)
-                _registrationState.value = RegistrationState.Success(response)
+                _isLoading.value = false
+                _successResponse.value = response
             } catch (e: Exception) {
-                _registrationState.value = RegistrationState.Error(e.message ?: "Unknown error")
+                _isLoading.value = false
+                _error.value = e.message ?: "Unknown error"
             }
         }
     }

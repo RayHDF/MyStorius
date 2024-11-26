@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.picodiploma.mystorius.data.UserRepository
 import com.dicoding.picodiploma.mystorius.di.Injection
+import com.dicoding.picodiploma.mystorius.view.login.LoginViewModel
 import com.dicoding.picodiploma.mystorius.view.main.MainViewModel
 import com.dicoding.picodiploma.mystorius.view.signup.SignupViewModel
 
@@ -17,6 +18,9 @@ class ViewModelFactory(private val userRepository: UserRepository) : ViewModelPr
             }
             modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
                 SignupViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
+                LoginViewModel(userRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

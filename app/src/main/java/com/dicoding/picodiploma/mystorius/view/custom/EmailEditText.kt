@@ -47,7 +47,7 @@ class EmailEditText @JvmOverloads constructor(
         return false
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         hint = "Email"
         textAlignment = TEXT_ALIGNMENT_VIEW_START

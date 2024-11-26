@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -15,6 +16,7 @@ import com.dicoding.picodiploma.mystorius.data.pref.UserModel
 import com.dicoding.picodiploma.mystorius.databinding.ActivityLoginBinding
 import com.dicoding.picodiploma.mystorius.view.ViewModelFactory
 import com.dicoding.picodiploma.mystorius.view.main.MainActivity
+import com.dicoding.picodiploma.mystorius.view.stories.StoriesActivity
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -30,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
         setupView()
         setupAction()
         setupTextWatchers()
+        observeViewModel()
     }
 
     private fun setupView() {
@@ -48,19 +51,8 @@ class LoginActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
-            viewModel.saveSession(UserModel(email, "sample_token"))
-            AlertDialog.Builder(this).apply {
-                setTitle("Yeah!")
-                setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
-                setPositiveButton("Lanjut") { _, _ ->
-                    val intent = Intent(context, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-                }
-                create()
-                show()
-            }
+            val password = binding.passwordEditText.text.toString()
+            viewModel.login(email, password)
         }
     }
 
@@ -80,4 +72,33 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.isEnabled = false
     }
 
+    private fun observeViewModel() {
+        viewModel.loginResponse.observe(this) { response ->
+            response.loginResult?.let {
+                viewModel.saveSession(UserModel(it.name ?: "", it.token ?: ""))
+                AlertDialog.Builder(this).apply {
+                    setTitle("Yeah!")
+                    setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
+                    setPositiveButton("Lanjut") { _, _ ->
+                        val intent = Intent(context, StoriesActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+                    create()
+                    show()
+                }
+            }
+        }
+
+        viewModel.error.observe(this) { error ->
+            AlertDialog.Builder(this).apply {
+                setTitle("Error")
+                setMessage(error)
+                setPositiveButton("OK", null)
+                create()
+                show()
+            }
+        }
+    }
 }

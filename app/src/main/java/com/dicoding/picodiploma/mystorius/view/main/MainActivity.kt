@@ -7,9 +7,14 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.picodiploma.mystorius.data.pref.UserPreference
+import com.dicoding.picodiploma.mystorius.data.pref.dataStore
 import com.dicoding.picodiploma.mystorius.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.mystorius.view.ViewModelFactory
+import com.dicoding.picodiploma.mystorius.view.stories.StoriesActivity
 import com.dicoding.picodiploma.mystorius.view.welcome.WelcomeActivity
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
@@ -22,10 +27,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
-                startActivity(Intent(this, WelcomeActivity::class.java))
-                finish()
+        val pref = UserPreference.getInstance(dataStore)
+        val user = runBlocking { pref.getSession().first() }
+        if (user.token.isNotEmpty()) {
+            startActivity(Intent(this, StoriesActivity::class.java))
+            finish()
+        } else {
+            viewModel.getSession().observe(this) { user ->
+                if (!user.isLogin) {
+                    startActivity(Intent(this, WelcomeActivity::class.java))
+                    finish()
+                }
             }
         }
 
@@ -51,5 +63,4 @@ class MainActivity : AppCompatActivity() {
             viewModel.logout()
         }
     }
-
 }
