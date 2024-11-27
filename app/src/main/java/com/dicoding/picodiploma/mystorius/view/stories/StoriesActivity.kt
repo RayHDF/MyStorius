@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.mystorius.view.stories
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.mystorius.databinding.ActivityStoriesBinding
 import com.dicoding.picodiploma.mystorius.data.pref.UserPreference
 import com.dicoding.picodiploma.mystorius.data.pref.dataStore
+import com.dicoding.picodiploma.mystorius.view.stories.addstory.AddStoryActivity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -26,6 +28,11 @@ class StoriesActivity : AppCompatActivity() {
         val user = runBlocking { pref.getSession().first() }
         user.token?.let {
             storiesViewModel.fetchStories(it)
+        }
+
+        binding.fab.setOnClickListener {
+            val intent = Intent(this@StoriesActivity, AddStoryActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -14,5 +14,11 @@
     <string name="greeting">Halo %1$s,</string>
     <string name="logout">Keluar</string>
     <string name="title_activity_stories">StoriesActivity</string>
+    <string name="preview_image">Preview Image</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="description">Description</string>
+    <string name="submit">Submit</string>
+    <string name="add_story">Add Story</string>
 
 </resources>
