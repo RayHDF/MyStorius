@@ -11,6 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyStorius">
         <activity
+            android:name=".view.stories.addstory.AddStoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.stories.storydetails.StoryDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.stories.StoriesActivity"
             android:exported="false" />
         <activity

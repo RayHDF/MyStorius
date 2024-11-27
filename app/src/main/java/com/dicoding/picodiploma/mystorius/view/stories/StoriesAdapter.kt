@@ -1,11 +1,13 @@
 package com.dicoding.picodiploma.mystorius.view.stories
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.picodiploma.mystorius.databinding.ItemStoryBinding
 import com.dicoding.picodiploma.mystorius.data.api.ListStoryItem
+import com.dicoding.picodiploma.mystorius.view.stories.storydetails.StoryDetailsActivity
 
 class StoriesAdapter(private val stories: List<ListStoryItem>) : RecyclerView.Adapter<StoriesAdapter.StoryViewHolder>() {
 
@@ -27,6 +29,13 @@ class StoriesAdapter(private val stories: List<ListStoryItem>) : RecyclerView.Ad
             Glide.with(binding.imageView.context)
                 .load(story.photoUrl)
                 .into(binding.imageView)
+
+            binding.root.setOnClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, StoryDetailsActivity::class.java)
+                intent.putExtra("story", story)
+                context.startActivity(intent)
+            }
         }
     }
 }
