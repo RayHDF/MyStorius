@@ -7,7 +7,6 @@
     tools:context=".view.stories.addstory.AddStoryActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
@@ -55,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:hint="@string/description"
+                android:autofillHints="@string/description"
                 android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 

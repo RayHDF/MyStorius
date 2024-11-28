@@ -1,8 +1,11 @@
 package com.dicoding.picodiploma.mystorius.view.stories
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.picodiploma.mystorius.databinding.ItemStoryBinding
@@ -34,7 +37,13 @@ class StoriesAdapter(private val stories: List<ListStoryItem>) : RecyclerView.Ad
                 val context = binding.root.context
                 val intent = Intent(context, StoryDetailsActivity::class.java)
                 intent.putExtra("story", story)
-                context.startActivity(intent)
+
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    context as Activity,
+                    Pair(binding.imageView, "storyImage"),
+                    Pair(binding.titleTextView, "storyTitle")
+                )
+                context.startActivity(intent, options.toBundle())
             }
         }
     }

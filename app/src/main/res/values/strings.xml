@@ -11,14 +11,20 @@
     <string name="title_login_page">Sudah siap untuk upgrade skill?</string>
     <string name="name">Nama</string>
     <string name="message_main_page">Selamat Belajar di Dicoding.</string>
-    <string name="greeting">Halo %1$s,</string>
     <string name="logout">Keluar</string>
-    <string name="title_activity_stories">StoriesActivity</string>
     <string name="preview_image">Preview Image</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
     <string name="description">Description</string>
     <string name="submit">Submit</string>
     <string name="add_story">Add Story</string>
+    <string name="empty_image_warning">Empty Image</string>
+    <string name="logout_button">Logout Button</string>
+    <string name="login_image">Login Image</string>
+    <string name="main_image">Main Image</string>
+    <string name="sign_up_image">Sign Up Image</string>
+    <string name="story_image">Story Image</string>
+    <string name="welcome_image">Welcome Image</string>
+    <string name="story_image_item">Story Image</string>
 
 </resources>

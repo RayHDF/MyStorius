@@ -1,6 +1,7 @@
 package com.dicoding.picodiploma.mystorius.di
 
 import android.content.Context
+import com.dicoding.picodiploma.mystorius.data.StoriesRepository
 import com.dicoding.picodiploma.mystorius.data.UserRepository
 import com.dicoding.picodiploma.mystorius.data.api.ApiConfig
 import com.dicoding.picodiploma.mystorius.data.pref.UserPreference
@@ -14,5 +15,9 @@ object Injection {
         val user = runBlocking { pref.getSession().first() }
         val apiService = ApiConfig.apiService
         return UserRepository.getInstance(pref, apiService)
+    }
+
+    fun provideStoriesRepository(): StoriesRepository {
+        return StoriesRepository()
     }
 }

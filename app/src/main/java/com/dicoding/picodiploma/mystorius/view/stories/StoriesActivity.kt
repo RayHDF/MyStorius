@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.mystorius.databinding.ActivityStoriesBinding
 import com.dicoding.picodiploma.mystorius.data.pref.UserPreference
 import com.dicoding.picodiploma.mystorius.data.pref.dataStore
+import com.dicoding.picodiploma.mystorius.view.main.MainActivity
 import com.dicoding.picodiploma.mystorius.view.stories.addstory.AddStoryActivity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -30,9 +31,19 @@ class StoriesActivity : AppCompatActivity() {
             storiesViewModel.fetchStories(it)
         }
 
-        binding.fab.setOnClickListener {
+        binding.addStoryFab.setOnClickListener {
             val intent = Intent(this@StoriesActivity, AddStoryActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.logoutFab.setOnClickListener {
+            runBlocking {
+                pref.logout()
+            }
+            val intent = Intent(this@StoriesActivity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
     }
 

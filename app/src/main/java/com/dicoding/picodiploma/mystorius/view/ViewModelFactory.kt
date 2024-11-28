@@ -3,25 +3,37 @@ package com.dicoding.picodiploma.mystorius.view
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.dicoding.picodiploma.mystorius.data.StoriesRepository
 import com.dicoding.picodiploma.mystorius.data.UserRepository
 import com.dicoding.picodiploma.mystorius.di.Injection
 import com.dicoding.picodiploma.mystorius.view.login.LoginViewModel
 import com.dicoding.picodiploma.mystorius.view.main.MainViewModel
 import com.dicoding.picodiploma.mystorius.view.signup.SignupViewModel
+import com.dicoding.picodiploma.mystorius.view.stories.addstory.AddStoryViewModel
 
-class ViewModelFactory(private val userRepository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(
+    private val userRepository: UserRepository,
+    private val storiesRepository: StoriesRepository
+) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(userRepository) as T
             }
+
             modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
                 SignupViewModel(userRepository) as T
             }
+
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(userRepository) as T
             }
+
+            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
+                AddStoryViewModel(storiesRepository) as T
+            }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
@@ -32,7 +44,10 @@ class ViewModelFactory(private val userRepository: UserRepository) : ViewModelPr
 
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository(context))
+                instance ?: ViewModelFactory(
+                    Injection.provideRepository(context),
+                    Injection.provideStoriesRepository()
+                )
             }.also { instance = it }
     }
 }

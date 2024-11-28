@@ -22,5 +22,8 @@ class StoryDetailsActivity : AppCompatActivity() {
                 .load(it.photoUrl)
                 .into(binding.imageView)
         }
+
+        binding.imageView.transitionName = "storyImage"
+        binding.titleTextView.transitionName = "storyTitle"
     }
 }
