@@ -9,6 +9,7 @@ import com.dicoding.picodiploma.mystorius.di.Injection
 import com.dicoding.picodiploma.mystorius.view.login.LoginViewModel
 import com.dicoding.picodiploma.mystorius.view.main.MainViewModel
 import com.dicoding.picodiploma.mystorius.view.signup.SignupViewModel
+import com.dicoding.picodiploma.mystorius.view.stories.StoriesViewModel
 import com.dicoding.picodiploma.mystorius.view.stories.addstory.AddStoryViewModel
 import com.dicoding.picodiploma.mystorius.view.stories.maps.MapsViewModel
 
@@ -37,6 +38,10 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
                 MapsViewModel(storiesRepository) as T
+            }
+
+            modelClass.isAssignableFrom(StoriesViewModel::class.java) -> {
+                StoriesViewModel(storiesRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

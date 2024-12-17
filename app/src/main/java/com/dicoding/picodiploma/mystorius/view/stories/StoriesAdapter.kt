@@ -12,7 +12,8 @@ import com.dicoding.picodiploma.mystorius.databinding.ItemStoryBinding
 import com.dicoding.picodiploma.mystorius.data.api.ListStoryItem
 import com.dicoding.picodiploma.mystorius.view.stories.storydetails.StoryDetailsActivity
 
-class StoriesAdapter(private val stories: List<ListStoryItem>) : RecyclerView.Adapter<StoriesAdapter.StoryViewHolder>() {
+class StoriesAdapter(private val stories: List<ListStoryItem>)
+    : RecyclerView.Adapter<StoriesAdapter.StoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)

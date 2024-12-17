@@ -78,4 +78,10 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:19.0.0")
 
     implementation("androidx.paging:paging-runtime-ktx:3.3.5")
+
+    implementation("androidx.arch.core:core-testing:2.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
+    implementation("org.mockito:mockito-inline:4.4.0")
+    implementation("org.mockito:mockito-core:4.4.0")
+
 }

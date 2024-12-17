@@ -18,6 +18,7 @@ object Injection {
     }
 
     fun provideStoriesRepository(): StoriesRepository {
-        return StoriesRepository()
+        val apiService = ApiConfig.apiService
+        return StoriesRepository(apiService)
     }
 }
