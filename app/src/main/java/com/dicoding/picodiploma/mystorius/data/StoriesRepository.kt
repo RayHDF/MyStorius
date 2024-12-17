@@ -39,6 +39,7 @@ class StoriesRepository(private val apiService: ApiService) {
             }
         ).liveData.also {
             it.observeForever { pagingData ->
+                Log.d("StoriesRepositoryToken", "Bearer $token")
                 Log.d("StoriesRepository", "Paging data loaded: $pagingData")
             }
         }
