@@ -10,6 +10,7 @@ import com.dicoding.picodiploma.mystorius.view.login.LoginViewModel
 import com.dicoding.picodiploma.mystorius.view.main.MainViewModel
 import com.dicoding.picodiploma.mystorius.view.signup.SignupViewModel
 import com.dicoding.picodiploma.mystorius.view.stories.addstory.AddStoryViewModel
+import com.dicoding.picodiploma.mystorius.view.stories.maps.MapsViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository,
@@ -32,6 +33,10 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
                 AddStoryViewModel(storiesRepository) as T
+            }
+
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(storiesRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

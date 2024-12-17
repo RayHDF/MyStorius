@@ -30,6 +30,16 @@ class StoriesRepository {
                 null
             }
         }
+    }
 
+    suspend fun getStoriesWithLocation(token: String):StoryResponse? {
+        return withContext(Dispatchers.IO) {
+            try {
+                ApiConfig.apiService.getStoriesWithLocation("Bearer $token")
+            } catch (e: Exception) {
+                Log.e("StoriesRepository", "Error getting stories with location: $e")
+                null
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.dicoding.picodiploma.mystorius.data.pref.UserPreference
 import com.dicoding.picodiploma.mystorius.data.pref.dataStore
 import com.dicoding.picodiploma.mystorius.view.main.MainActivity
 import com.dicoding.picodiploma.mystorius.view.stories.addstory.AddStoryActivity
+import com.dicoding.picodiploma.mystorius.view.stories.maps.MapsActivity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -33,6 +34,11 @@ class StoriesActivity : AppCompatActivity() {
 
         binding.addStoryFab.setOnClickListener {
             val intent = Intent(this@StoriesActivity, AddStoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.mapsFab.setOnClickListener {
+            val intent = Intent(this@StoriesActivity, MapsActivity::class.java)
             startActivity(intent)
         }
 
