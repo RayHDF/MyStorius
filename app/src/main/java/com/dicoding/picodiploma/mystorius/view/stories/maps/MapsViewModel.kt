@@ -8,7 +8,7 @@ import com.dicoding.picodiploma.mystorius.data.StoriesRepository
 import com.dicoding.picodiploma.mystorius.data.api.ListStoryItem
 import kotlinx.coroutines.launch
 
-class MapsViewModel(private val repository: StoriesRepository): ViewModel() {
+class MapsViewModel(private val repository: StoriesRepository) : ViewModel() {
     private val _stories = MutableLiveData<List<ListStoryItem>>()
     val stories: LiveData<List<ListStoryItem>> get() = _stories
 

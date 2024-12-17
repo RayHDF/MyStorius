@@ -5,12 +5,12 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.dicoding.picodiploma.mystorius.data.api.ApiService
 import com.dicoding.picodiploma.mystorius.data.api.ListStoryItem
-import com.dicoding.picodiploma.mystorius.data.api.StoryResponse
 
-class StoryPagingSource(private val apiService: ApiService, private val token: String) : PagingSource<Int, ListStoryItem>() {
+class StoryPagingSource(private val apiService: ApiService, private val token: String) :
+    PagingSource<Int, ListStoryItem>() {
 
     private companion object {
-        private val INITIAL_PAGE_INDEX = 1
+        private const val INITIAL_PAGE_INDEX = 1
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ListStoryItem> {
@@ -24,7 +24,7 @@ class StoryPagingSource(private val apiService: ApiService, private val token: S
             LoadResult.Page(
                 data = stories,
                 prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
-                nextKey = if (stories.isNullOrEmpty()) null else position + 1
+                nextKey = if (stories.isEmpty()) null else position + 1
             )
         } catch (exception: Exception) {
             Log.e("StoryPagingSource", "Error loading stories", exception)

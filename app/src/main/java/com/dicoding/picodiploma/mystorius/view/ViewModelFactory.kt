@@ -18,6 +18,7 @@ class ViewModelFactory(
     private val storiesRepository: StoriesRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {

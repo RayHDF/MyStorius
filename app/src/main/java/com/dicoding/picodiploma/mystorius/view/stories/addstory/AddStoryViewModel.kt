@@ -29,9 +29,15 @@ class AddStoryViewModel(private val repository: StoriesRepository) : ViewModel()
         _description.value = desc
     }
 
-    fun uploadImage(token: String, imageMultipart: MultipartBody.Part, description: RequestBody) {
+    fun uploadImage(
+        token: String,
+        imageMultipart: MultipartBody.Part,
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
+    ) {
         viewModelScope.launch {
-            val response = repository.uploadImage(token, imageMultipart, description)
+            val response = repository.uploadImage(token, imageMultipart, description, lat, lon)
             _uploadResult.value = response
         }
     }

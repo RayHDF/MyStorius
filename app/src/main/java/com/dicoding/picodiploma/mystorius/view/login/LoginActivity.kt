@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
-import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -15,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.picodiploma.mystorius.data.pref.UserModel
 import com.dicoding.picodiploma.mystorius.databinding.ActivityLoginBinding
 import com.dicoding.picodiploma.mystorius.view.ViewModelFactory
-import com.dicoding.picodiploma.mystorius.view.main.MainActivity
 import com.dicoding.picodiploma.mystorius.view.stories.StoriesActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -61,7 +59,9 @@ class LoginActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val isEmailValid = binding.emailEditText.text.toString().isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.text.toString()).matches()
+                val isEmailValid = binding.emailEditText.text.toString()
+                    .isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.text.toString())
+                    .matches()
                 binding.loginButton.isEnabled = isEmailValid
             }
 
@@ -81,7 +81,8 @@ class LoginActivity : AppCompatActivity() {
                     setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
                     setPositiveButton("Lanjut") { _, _ ->
                         val intent = Intent(context, StoriesActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
                         finish()
                     }

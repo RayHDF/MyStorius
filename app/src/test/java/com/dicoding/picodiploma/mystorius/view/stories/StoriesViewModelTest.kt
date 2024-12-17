@@ -17,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -29,7 +28,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class StoriesViewModelTest{
+class StoriesViewModelTest {
     @get: Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
@@ -50,10 +49,12 @@ class StoriesViewModelTest{
         val data: PagingData<ListStoryItem> = StoryPagingSource.snapshot(dummyStory)
         val expectedStory = MutableLiveData<PagingData<ListStoryItem>>()
         expectedStory.value = data
-        Mockito.`when`(storiesRepository.getStoriesWithPaging(Mockito.anyString())).thenReturn(expectedStory)
+        Mockito.`when`(storiesRepository.getStoriesWithPaging(Mockito.anyString()))
+            .thenReturn(expectedStory)
 
         val storiesViewModel = StoriesViewModel(storiesRepository)
-        val actualStory: PagingData<ListStoryItem> = storiesViewModel.getStoriesPagingData("any_token").getOrAwaitValue()
+        val actualStory: PagingData<ListStoryItem> =
+            storiesViewModel.getStoriesPagingData("any_token").getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoriesPagingAdapter.DIFF_CALLBACK,
@@ -68,14 +69,16 @@ class StoriesViewModelTest{
     }
 
     @Test
-    fun `when Get Quote Empty Should Return No Data`() = runTest {
+    fun `when Get Story Empty Should Return No Data`() = runTest {
         val data: PagingData<ListStoryItem> = PagingData.from(emptyList())
         val expectedStory = MutableLiveData<PagingData<ListStoryItem>>()
         expectedStory.value = data
-        Mockito.`when`(storiesRepository.getStoriesWithPaging(Mockito.anyString())).thenReturn(expectedStory)
+        Mockito.`when`(storiesRepository.getStoriesWithPaging(Mockito.anyString()))
+            .thenReturn(expectedStory)
 
         val storiesViewModel = StoriesViewModel(storiesRepository)
-        val actualStory: PagingData<ListStoryItem> = storiesViewModel.getStoriesPagingData("any_token").getOrAwaitValue()
+        val actualStory: PagingData<ListStoryItem> =
+            storiesViewModel.getStoriesPagingData("any_token").getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoriesPagingAdapter.DIFF_CALLBACK,
@@ -103,7 +106,7 @@ class StoryPagingSource : PagingSource<Int, LiveData<List<ListStoryItem>>>() {
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, LiveData<List<ListStoryItem>>>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, LiveData<List<ListStoryItem>>>): Int {
         return 0
     }
 

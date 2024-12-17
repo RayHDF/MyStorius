@@ -2,7 +2,6 @@ package com.dicoding.picodiploma.mystorius.view.signup
 
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
@@ -76,7 +75,9 @@ class SignupActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val isNameValid = binding.nameEditText.text.toString().length >= 3
-                val isEmailValid = binding.emailEditText.text.toString().isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.text.toString()).matches()
+                val isEmailValid = binding.emailEditText.text.toString()
+                    .isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.text.toString())
+                    .matches()
                 val isPasswordValid = binding.passwordEditText.text.toString().length >= 8
 
                 binding.signupButton.isEnabled = isNameValid && isEmailValid && isPasswordValid

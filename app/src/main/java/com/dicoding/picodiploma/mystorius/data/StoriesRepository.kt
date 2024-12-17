@@ -17,18 +17,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class StoriesRepository(private val apiService: ApiService) {
-    suspend fun getStories(token: String): StoryResponse? {
-        return withContext(Dispatchers.IO) {
-            try {
-                ApiConfig.apiService.getStories("Bearer $token")
-            } catch (e: Exception) {
-                Log.e("StoriesRepository", "Error getting stories", e)
-                null
-            }
-        }
-    }
-
-
     fun getStoriesWithPaging(token: String): LiveData<PagingData<ListStoryItem>> {
         return Pager(
             config = PagingConfig(
@@ -45,10 +33,22 @@ class StoriesRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun uploadImage(token: String, imageMultiPart: MultipartBody.Part, description: RequestBody): FileUploadResponse? {
+    suspend fun uploadImage(
+        token: String,
+        imageMultiPart: MultipartBody.Part,
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
+    ): FileUploadResponse? {
         return withContext(Dispatchers.IO) {
             try {
-                ApiConfig.apiService.uploadImage("Bearer $token", imageMultiPart, description)
+                ApiConfig.apiService.uploadImage(
+                    "Bearer $token",
+                    imageMultiPart,
+                    description,
+                    lat,
+                    lon
+                )
             } catch (e: Exception) {
                 Log.e("StoriesRepository", "Error uploading image", e)
                 null
@@ -56,7 +56,7 @@ class StoriesRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun getStoriesWithLocation(token: String):StoryResponse? {
+    suspend fun getStoriesWithLocation(token: String): StoryResponse? {
         return withContext(Dispatchers.IO) {
             try {
                 ApiConfig.apiService.getStoriesWithLocation("Bearer $token")

@@ -21,7 +21,8 @@ class EmailEditText @JvmOverloads constructor(
     private var clearButtonImage: Drawable
 
     init {
-        clearButtonImage = ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp) as Drawable
+        clearButtonImage =
+            ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp) as Drawable
         setOnTouchListener(this)
 
         addTextChangedListener(object : TextWatcher {

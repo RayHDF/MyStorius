@@ -4,12 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.mystorius.databinding.ActivityStoriesBinding
 import com.dicoding.picodiploma.mystorius.data.pref.UserPreference
 import com.dicoding.picodiploma.mystorius.data.pref.dataStore
-import com.dicoding.picodiploma.mystorius.di.Injection
 import com.dicoding.picodiploma.mystorius.view.ViewModelFactory
 import com.dicoding.picodiploma.mystorius.view.main.MainActivity
 import com.dicoding.picodiploma.mystorius.view.stories.addstory.AddStoryActivity
@@ -34,7 +32,7 @@ class StoriesActivity : AppCompatActivity() {
 
         val pref = UserPreference.getInstance(dataStore)
         val user = runBlocking { pref.getSession().first() }
-        user.token?.let {
+        user.token.let {
             storiesViewModel.getStoriesPagingData(it).observe(this) { pagingData ->
                 adapter.submitData(lifecycle, pagingData)
             }

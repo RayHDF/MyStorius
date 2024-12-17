@@ -27,5 +27,6 @@
     <string name="welcome_image">Welcome Image</string>
     <string name="story_image_item">Story Image</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="enable_location">Enable Location</string>
 
 </resources>
